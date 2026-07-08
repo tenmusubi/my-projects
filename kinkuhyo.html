@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>勤務表</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', sans-serif; background: #f5f5f5; color: #333; padding: 20px; }
+    .container { max-width: 1000px; margin: 0 auto; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); padding: 30px; }
+    h1 { text-align: center; font-size: 1.6rem; margin-bottom: 20px; color: #2c3e50; }
+    .header-info { display: flex; gap: 20px; margin-bottom: 20px; flex-wrap: wrap; align-items: center; }
+    .header-info label { font-weight: bold; }
+    .header-info input, .header-info select { border: 1px solid #ccc; border-radius: 4px; padding: 6px 10px; font-size: 0.95rem; }
+    .summary { display: flex; gap: 20px; margin-bottom: 16px; background: #eef4fb; border-radius: 6px; padding: 12px 16px; flex-wrap: wrap; }
+    .summary div { font-size: 0.9rem; }
+    .summary span { font-weight: bold; color: #2980b9; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+    th { background: #2c3e50; color: #fff; padding: 8px 6px; text-align: center; }
+    td { border: 1px solid #ddd; padding: 6px 4px; text-align: center; vertical-align: middle; }
+    tr:nth-child(even) td { background: #f9f9f9; }
+    tr.holiday td { background: #fff0f0; color: #c0392b; }
+    tr.saturday td { background: #f0f4ff; color: #2c3e50; }
+    td input[type="time"], td input[type="text"] { border: 1px solid #ccc; border-radius: 3px; padding: 4px; width: 100%; font-size: 0.85rem; text-align: center; }
+    td input[type="text"].note { width: 100%; }
+    .total-row td { background: #eef4fb; font-weight: bold; }
+    .btn-row { margin-top: 20px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    button { padding: 10px 24px; border: none; border-radius: 5px; font-size: 0.95rem; cursor: pointer; }
+    .btn-calc { background: #2980b9; color: #fff; }
+    .btn-calc:hover { background: #1a6fa3; }
+    .btn-print { background: #27ae60; color: #fff; }
+    .btn-print:hover { background: #1e8449; }
+    .btn-clear { background: #e74c3c; color: #fff; }
+    .btn-clear:hover { background: #c0392b; }
+    .day-label { font-size: 0.8rem; color: #666; }
+    @media print {
+      body { background: #fff; padding: 0; }
+      .container { box-shadow: none; padding: 10px; }
+      .btn-row { display: none; }
+      td input, td select { border: none; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>勤　務　表</h1>
+
+  <div class="header-info">
+    <div>
+      <label>氏名：</label>
+      <input type="text" id="empName" placeholder="氏名を入力" style="width:140px">
+    </div>
+    <div>
+      <label>部署：</label>
+      <input type="text" id="dept" placeholder="部署" style="width:130px">
+    </div>
+    <div>
+      <label>年月：</label>
+      <select id="yearSel"></select> 年
+      <select id="monthSel"></select> 月
+    </div>
+  </div>
+
+  <div class="summary">
+    <div>出勤日数：<span id="sumWorkDays">0</span> 日</div>
+    <div>総労働時間：<span id="sumTotal">0:00</span></div>
+    <div>所定内：<span id="sumRegular">0:00</span></div>
+    <div>残業時間：<span id="sumOvertime">0:00</span></div>
+    <div>遅刻・早退：<span id="sumLate">0</span> 回</div>
+    <div>欠勤：<span id="sumAbsent">0</span> 日</div>
+  </div>
+
+  <table id="attendanceTable">
+    <thead>
+      <tr>
+        <th style="width:40px">日</th>
+        <th style="width:32px">曜</th>
+        <th style="width:80px">出勤時刻</th>
+        <th style="width:80px">退勤時刻</th>
+        <th style="width:70px">休憩(分)</th>
+        <th style="width:75px">労働時間</th>
+        <th style="width:75px">残業時間</th>
+        <th style="width:100px">区分</th>
+        <th>備考</th>
+      </tr>
+    </thead>
+    <tbody id="tableBody"></tbody>
+    <tfoot>
+      <tr class="total-row">
+        <td colspan="5" style="text-align:right">合　計</td>
+        <td id="footTotal">0:00</td>
+        <td id="footOvertime">0:00</td>
+        <td colspan="2"></td>
+      </tr>
+    </tfoot>
+  </table>
+
+  <div class="btn-row">
+    <button class="btn-calc" onclick="calculate()">集計する</button>
+    <button class="btn-print" onclick="window.print()">印刷する</button>
+    <button class="btn-clear" onclick="clearAll()">クリア</button>
+  </div>
+</div>
+
+<script>
+  const WEEKDAYS = ['日','月','火','水','木','金','土'];
+  const CATEGORIES = ['','出勤','有給','半休','欠勤','特休','振休','休日出勤'];
+  const REGULAR_HOURS = 8 * 60; // 所定労働時間 8h
+
+  function initSelects() {
+    const yearSel = document.getElementById('yearSel');
+    const monthSel = document.getElementById('monthSel');
+    const today = new Date();
+    for (let y = today.getFullYear() - 2; y <= today.getFullYear() + 1; y++) {
+      const opt = document.createElement('option');
+      opt.value = y; opt.textContent = y;
+      if (y === today.getFullYear()) opt.selected = true;
+      yearSel.appendChild(opt);
+    }
+    for (let m = 1; m <= 12; m++) {
+      const opt = document.createElement('option');
+      opt.value = m; opt.textContent = m;
+      if (m === today.getMonth() + 1) opt.selected = true;
+      monthSel.appendChild(opt);
+    }
+    yearSel.addEventListener('change', buildTable);
+    monthSel.addEventListener('change', buildTable);
+  }
+
+  function buildTable() {
+    const year = parseInt(document.getElementById('yearSel').value);
+    const month = parseInt(document.getElementById('monthSel').value);
+    const days = new Date(year, month, 0).getDate();
+    const tbody = document.getElementById('tableBody');
+    tbody.innerHTML = '';
+
+    for (let d = 1; d <= days; d++) {
+      const date = new Date(year, month - 1, d);
+      const dow = date.getDay();
+      const tr = document.createElement('tr');
+      if (dow === 0) tr.classList.add('holiday');
+      else if (dow === 6) tr.classList.add('saturday');
+
+      const catOpts = CATEGORIES.map(c => `<option value="${c}">${c}</option>`).join('');
+      tr.innerHTML = `
+        <td>${d}<br><span class="day-label">${WEEKDAYS[dow]}</span></td>
+        <td>${WEEKDAYS[dow]}</td>
+        <td><input type="time" class="start"></td>
+        <td><input type="time" class="end"></td>
+        <td><input type="text" class="rest" value="60" style="width:60px"></td>
+        <td class="worked">-</td>
+        <td class="overtime">-</td>
+        <td><select class="category">${catOpts}</select></td>
+        <td><input type="text" class="note" placeholder="備考"></td>
+      `;
+      // auto-fill category for weekends
+      if (dow === 0 || dow === 6) {
+        tr.querySelector('.category').value = '';
+      }
+      tbody.appendChild(tr);
+    }
+  }
+
+  function toMinutes(timeStr) {
+    if (!timeStr) return null;
+    const [h, m] = timeStr.split(':').map(Number);
+    return h * 60 + m;
+  }
+
+  function toHHMM(minutes) {
+    if (minutes < 0) minutes = 0;
+    const h = Math.floor(minutes / 60);
+    const m = minutes % 60;
+    return `${h}:${String(m).padStart(2,'0')}`;
+  }
+
+  function calculate() {
+    const rows = document.querySelectorAll('#tableBody tr');
+    let totalWork = 0, totalOvertime = 0, workDays = 0, lateCount = 0, absentCount = 0, regularSum = 0;
+
+    rows.forEach(tr => {
+      const startVal = tr.querySelector('.start').value;
+      const endVal = tr.querySelector('.end').value;
+      const restVal = parseInt(tr.querySelector('.rest').value) || 0;
+      const cat = tr.querySelector('.category').value;
+      const workedCell = tr.querySelector('.worked');
+      const overtimeCell = tr.querySelector('.overtime');
+
+      if (cat === '欠勤') absentCount++;
+      if (cat === '遅刻' || cat === '早退') lateCount++;
+
+      if (startVal && endVal) {
+        const start = toMinutes(startVal);
+        const end = toMinutes(endVal);
+        if (end > start) {
+          const worked = end - start - restVal;
+          const ot = Math.max(0, worked - REGULAR_HOURS);
+          const reg = Math.min(worked, REGULAR_HOURS);
+          workedCell.textContent = toHHMM(worked);
+          overtimeCell.textContent = ot > 0 ? toHHMM(ot) : '-';
+          totalWork += worked;
+          totalOvertime += ot;
+          regularSum += reg;
+          workDays++;
+        } else {
+          workedCell.textContent = '-';
+          overtimeCell.textContent = '-';
+        }
+      } else {
+        workedCell.textContent = '-';
+        overtimeCell.textContent = '-';
+      }
+    });
+
+    document.getElementById('sumWorkDays').textContent = workDays;
+    document.getElementById('sumTotal').textContent = toHHMM(totalWork);
+    document.getElementById('sumRegular').textContent = toHHMM(regularSum);
+    document.getElementById('sumOvertime').textContent = toHHMM(totalOvertime);
+    document.getElementById('sumLate').textContent = lateCount;
+    document.getElementById('sumAbsent').textContent = absentCount;
+    document.getElementById('footTotal').textContent = toHHMM(totalWork);
+    document.getElementById('footOvertime').textContent = toHHMM(totalOvertime);
+  }
+
+  function clearAll() {
+    if (!confirm('入力内容をすべてクリアしますか？')) return;
+    document.querySelectorAll('#tableBody tr').forEach(tr => {
+      tr.querySelectorAll('input[type="time"]').forEach(i => i.value = '');
+      tr.querySelectorAll('input[type="text"].note').forEach(i => i.value = '');
+      tr.querySelectorAll('select.category').forEach(s => s.value = '');
+      tr.querySelector('.rest').value = '60';
+      tr.querySelector('.worked').textContent = '-';
+      tr.querySelector('.overtime').textContent = '-';
+    });
+    ['sumWorkDays','sumTotal','sumRegular','sumOvertime'].forEach(id => {
+      document.getElementById(id).textContent = id.includes('Days') ? '0' : '0:00';
+    });
+    document.getElementById('sumLate').textContent = '0';
+    document.getElementById('sumAbsent').textContent = '0';
+    document.getElementById('footTotal').textContent = '0:00';
+    document.getElementById('footOvertime').textContent = '0:00';
+  }
+
+  initSelects();
+  buildTable();
+</script>
+</body>
+</html>
