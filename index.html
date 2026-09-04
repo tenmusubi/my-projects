@@ -3,29 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="ようこそ。私たちのサービスと想いを紹介するホームページです。">
-  <title>Home</title>
+  <meta name="description" content="おんケアマネ相談事業所（株式会社おん）は、愛知県名古屋市北区の居宅介護支援事業所です。介護の相談・ケアプランの作成を、経験豊富な主任介護支援専門員がやさしくサポートします。">
+  <title>おんケアマネ相談事業所</title>
   <style>
     :root {
-      --bg: #ffffff;
-      --surface: #f6f7f9;
-      --text: #1a1d24;
-      --muted: #5b6270;
-      --border: #e5e8ee;
-      --accent: #2f6df6;
-      --accent-hover: #1f57d6;
-      --shadow: 0 8px 30px rgba(20, 30, 60, 0.08);
+      --bg: #fffafb;
+      --surface: #ffffff;
+      --soft: #fdeef2;
+      --soft-2: #fbe3ea;
+      --text: #3f2f36;
+      --muted: #7d6a72;
+      --sakura: #e37b98;
+      --sakura-deep: #cf5f7e;
+      --sakura-soft: #f4b8c8;
+      --border: #f2dce3;
+      --shadow: 0 10px 34px rgba(206, 95, 126, 0.12);
+      --radius: 18px;
     }
     @media (prefers-color-scheme: dark) {
       :root {
-        --bg: #0f1218;
-        --surface: #171b23;
-        --text: #eef1f6;
-        --muted: #9aa2b1;
-        --border: #262c38;
-        --accent: #5b8bff;
-        --accent-hover: #7aa0ff;
-        --shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+        --bg: #221a1d;
+        --surface: #2b2126;
+        --soft: #322730;
+        --soft-2: #3a2c35;
+        --text: #f4e9ed;
+        --muted: #c7b2bb;
+        --sakura: #f194ac;
+        --sakura-deep: #f6a9be;
+        --sakura-soft: #7a4a5b;
+        --border: #43333b;
+        --shadow: 0 10px 34px rgba(0, 0, 0, 0.4);
       }
     }
 
@@ -37,177 +44,233 @@
         "Noto Sans JP", "Yu Gothic", Meiryo, sans-serif;
       color: var(--text);
       background: var(--bg);
-      line-height: 1.75;
+      line-height: 1.9;
+      font-size: 17px;
       -webkit-font-smoothing: antialiased;
     }
     a { color: inherit; text-decoration: none; }
-    .container { width: 100%; max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+    .container { width: 100%; max-width: 1040px; margin: 0 auto; padding: 0 22px; }
+    .center { text-align: center; }
+
+    /* Sakura mark */
+    .sakura-mark { display: inline-block; vertical-align: middle; }
 
     /* Header */
     header {
       position: sticky; top: 0; z-index: 50;
-      background: color-mix(in srgb, var(--bg) 88%, transparent);
+      background: color-mix(in srgb, var(--bg) 90%, transparent);
       backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--border);
     }
-    .nav { display: flex; align-items: center; justify-content: space-between; height: 66px; }
-    .brand { font-weight: 700; font-size: 1.15rem; letter-spacing: 0.02em; }
-    .brand span { color: var(--accent); }
-    .nav-links { display: flex; gap: 28px; }
-    .nav-links a { color: var(--muted); font-size: 0.95rem; transition: color 0.2s; }
-    .nav-links a:hover { color: var(--text); }
-    @media (max-width: 640px) { .nav-links { display: none; } }
+    .nav { display: flex; align-items: center; justify-content: space-between; height: 72px; gap: 12px; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.2rem; }
+    .brand small { display: block; font-size: 0.72rem; color: var(--muted); font-weight: 500; letter-spacing: 0.03em; }
+    .nav-links { display: flex; gap: 26px; }
+    .nav-links a { color: var(--muted); font-size: 0.98rem; font-weight: 600; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--sakura-deep); }
+    .nav .tel-cta { display: flex; align-items: center; gap: 8px; }
+    @media (max-width: 860px) { .nav-links { display: none; } }
+    @media (max-width: 520px) { .nav .tel-cta .btn { display: none; } }
 
     /* Buttons */
     .btn {
-      display: inline-block; padding: 12px 26px; border-radius: 10px;
-      font-weight: 600; font-size: 0.98rem; transition: all 0.2s; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 8px; padding: 13px 26px;
+      border-radius: 999px; font-weight: 700; font-size: 1rem; transition: all 0.2s; cursor: pointer;
     }
-    .btn-primary { background: var(--accent); color: #fff; }
-    .btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); }
-    .btn-ghost { border: 1px solid var(--border); color: var(--text); }
-    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-primary { background: var(--sakura); color: #fff; box-shadow: 0 6px 18px rgba(206,95,126,0.28); }
+    .btn-primary:hover { background: var(--sakura-deep); transform: translateY(-2px); }
+    .btn-ghost { border: 1.5px solid var(--sakura-soft); color: var(--sakura-deep); background: var(--surface); }
+    .btn-ghost:hover { border-color: var(--sakura); background: var(--soft); }
+    .btn-tel { background: var(--surface); border: 1.5px solid var(--border); color: var(--sakura-deep); font-size: 0.95rem; padding: 10px 18px; }
 
     /* Hero */
-    .hero { padding: 96px 0 80px; text-align: center; }
-    .hero .eyebrow {
-      display: inline-block; font-size: 0.85rem; font-weight: 600; letter-spacing: 0.08em;
-      color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, transparent);
-      padding: 6px 14px; border-radius: 999px; margin-bottom: 22px;
+    .hero {
+      position: relative; overflow: hidden;
+      background:
+        radial-gradient(circle at 12% 18%, var(--soft) 0%, transparent 42%),
+        radial-gradient(circle at 88% 82%, var(--soft-2) 0%, transparent 46%),
+        var(--bg);
+      padding: 96px 0 88px;
     }
-    .hero h1 {
-      font-size: clamp(2rem, 5vw, 3.4rem); line-height: 1.25; margin: 0 0 20px;
-      font-weight: 800; letter-spacing: 0.01em;
+    .hero .petal { position: absolute; opacity: 0.5; pointer-events: none; }
+    .hero .p1 { top: 40px; right: 8%; width: 70px; transform: rotate(18deg); }
+    .hero .p2 { bottom: 44px; left: 6%; width: 90px; transform: rotate(-24deg); opacity: 0.4; }
+    .hero .p3 { top: 130px; left: 16%; width: 40px; transform: rotate(40deg); opacity: 0.35; }
+    .hero-inner { position: relative; text-align: center; }
+    .eyebrow {
+      display: inline-block; font-size: 0.9rem; font-weight: 700; letter-spacing: 0.08em;
+      color: var(--sakura-deep); background: var(--surface); border: 1px solid var(--border);
+      padding: 7px 18px; border-radius: 999px; margin-bottom: 26px; box-shadow: var(--shadow);
     }
-    .hero p { font-size: 1.1rem; color: var(--muted); max-width: 620px; margin: 0 auto 34px; }
+    .hero h1 { font-size: clamp(1.9rem, 5vw, 3.1rem); line-height: 1.5; margin: 0 0 22px; font-weight: 800; letter-spacing: 0.01em; }
+    .hero h1 .accent { color: var(--sakura-deep); }
+    .hero p.lead { font-size: 1.12rem; color: var(--muted); max-width: 640px; margin: 0 auto 36px; }
     .hero-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
 
     /* Sections */
-    section { padding: 72px 0; }
-    .section-head { text-align: center; margin-bottom: 48px; }
-    .section-head h2 { font-size: clamp(1.6rem, 3.5vw, 2.2rem); margin: 0 0 12px; font-weight: 800; }
-    .section-head p { color: var(--muted); margin: 0; }
+    section { padding: 80px 0; }
+    .section-head { text-align: center; margin-bottom: 52px; }
+    .section-head .kicker { color: var(--sakura); font-weight: 700; letter-spacing: 0.12em; font-size: 0.85rem; display: block; margin-bottom: 10px; }
+    .section-head h2 { font-size: clamp(1.6rem, 3.6vw, 2.2rem); margin: 0 0 14px; font-weight: 800; }
+    .section-head p { color: var(--muted); margin: 0 auto; max-width: 620px; }
 
-    /* Feature grid */
+    /* Concern band */
+    .concern { background: var(--soft); }
+    .concern-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; max-width: 780px; margin: 0 auto; }
+    @media (max-width: 620px) { .concern-grid { grid-template-columns: 1fr; } }
+    .concern-item {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
+      padding: 20px 22px; display: flex; gap: 14px; align-items: flex-start; font-weight: 600;
+    }
+    .concern-item .q { color: var(--sakura); font-weight: 800; flex-shrink: 0; }
+
+    /* Services */
     .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
     @media (max-width: 820px) { .grid { grid-template-columns: 1fr; } }
     .card {
-      background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
-      padding: 32px 28px; transition: transform 0.2s, box-shadow 0.2s;
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 34px 28px; transition: transform 0.2s, box-shadow 0.2s;
     }
-    .card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+    .card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
     .card .icon {
-      width: 52px; height: 52px; border-radius: 13px; display: grid; place-items: center;
-      background: color-mix(in srgb, var(--accent) 14%, transparent);
-      font-size: 1.5rem; margin-bottom: 18px;
+      width: 60px; height: 60px; border-radius: 16px; display: grid; place-items: center;
+      background: var(--soft); margin-bottom: 20px;
     }
-    .card h3 { margin: 0 0 10px; font-size: 1.2rem; }
-    .card p { margin: 0; color: var(--muted); font-size: 0.97rem; }
+    .card h3 { margin: 0 0 12px; font-size: 1.24rem; }
+    .card p { margin: 0; color: var(--muted); font-size: 1rem; }
 
-    /* About */
-    .about { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-    .about-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
-    @media (max-width: 820px) { .about-inner { grid-template-columns: 1fr; gap: 32px; } }
-    .about h2 { font-size: clamp(1.6rem, 3.5vw, 2.2rem); margin: 0 0 18px; }
-    .about p { color: var(--muted); margin: 0 0 16px; }
-    .stats { display: flex; gap: 40px; margin-top: 28px; flex-wrap: wrap; }
-    .stat .num { font-size: 2rem; font-weight: 800; color: var(--accent); }
-    .stat .label { font-size: 0.9rem; color: var(--muted); }
-
-    /* CTA */
-    .cta { text-align: center; }
-    .cta-box {
-      background: linear-gradient(135deg, var(--accent), var(--accent-hover));
-      color: #fff; border-radius: 22px; padding: 60px 32px;
+    /* Greeting */
+    .greeting { background: var(--soft); }
+    .greeting-inner { display: grid; grid-template-columns: 300px 1fr; gap: 48px; align-items: center; }
+    @media (max-width: 820px) { .greeting-inner { grid-template-columns: 1fr; gap: 30px; } }
+    .greeting-card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 36px 28px; text-align: center; box-shadow: var(--shadow);
     }
-    .cta-box h2 { margin: 0 0 14px; font-size: clamp(1.6rem, 3.5vw, 2.2rem); }
-    .cta-box p { margin: 0 0 30px; opacity: 0.92; }
-    .cta-box .btn-primary { background: #fff; color: var(--accent); }
-    .cta-box .btn-primary:hover { background: #f0f3ff; }
+    .greeting-card .role { color: var(--muted); font-size: 0.92rem; font-weight: 600; }
+    .greeting-card .name { font-size: 1.7rem; font-weight: 800; margin: 6px 0 2px; }
+    .greeting-card .name-en { color: var(--sakura); font-weight: 700; letter-spacing: 0.06em; }
+    .greeting h2 { font-size: clamp(1.5rem, 3.4vw, 2rem); margin: 0 0 18px; }
+    .greeting p { color: var(--text); margin: 0 0 16px; }
+
+    /* Flow */
+    .flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    @media (max-width: 820px) { .flow { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 480px) { .flow { grid-template-columns: 1fr; } }
+    .step { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px 22px; position: relative; }
+    .step .no {
+      width: 40px; height: 40px; border-radius: 50%; background: var(--sakura); color: #fff;
+      display: grid; place-items: center; font-weight: 800; margin-bottom: 16px;
+    }
+    .step h3 { margin: 0 0 8px; font-size: 1.1rem; }
+    .step p { margin: 0; color: var(--muted); font-size: 0.95rem; }
+
+    /* Company table */
+    .company-table {
+      width: 100%; max-width: 780px; margin: 0 auto; border-collapse: collapse;
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden;
+    }
+    .company-table th, .company-table td { text-align: left; padding: 18px 24px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    .company-table tr:last-child th, .company-table tr:last-child td { border-bottom: none; }
+    .company-table th { width: 34%; background: var(--soft); font-weight: 700; white-space: nowrap; }
+    @media (max-width: 560px) {
+      .company-table, .company-table tbody, .company-table tr, .company-table th, .company-table td { display: block; width: 100%; }
+      .company-table th { border-bottom: none; padding-bottom: 4px; }
+      .company-table td { padding-top: 4px; }
+    }
+
+    /* Contact CTA */
+    .contact { background: var(--soft); }
+    .contact-box {
+      background: linear-gradient(135deg, var(--sakura), var(--sakura-deep));
+      color: #fff; border-radius: 26px; padding: 60px 32px; text-align: center; box-shadow: var(--shadow);
+    }
+    .contact-box h2 { margin: 0 0 12px; font-size: clamp(1.6rem, 3.6vw, 2.2rem); }
+    .contact-box p { margin: 0 0 28px; opacity: 0.95; }
+    .contact-tel {
+      display: inline-flex; flex-direction: column; align-items: center;
+      background: rgba(255,255,255,0.16); border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 18px; padding: 22px 40px; margin-bottom: 8px;
+    }
+    .contact-tel .num { font-size: clamp(1.8rem, 6vw, 2.6rem); font-weight: 800; letter-spacing: 0.02em; line-height: 1.2; }
+    .contact-tel .num a { color: #fff; }
+    .contact-tel .hours { font-size: 0.92rem; opacity: 0.9; }
+    .contact-box .fax { font-size: 0.95rem; opacity: 0.9; margin-top: 6px; }
 
     /* Footer */
-    footer { border-top: 1px solid var(--border); padding: 40px 0; }
-    .foot { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
-    .foot .muted { color: var(--muted); font-size: 0.9rem; }
-    .foot-links { display: flex; gap: 22px; }
-    .foot-links a { color: var(--muted); font-size: 0.9rem; }
-    .foot-links a:hover { color: var(--accent); }
+    footer { padding: 46px 0 40px; border-top: 1px solid var(--border); }
+    .foot { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 22px; }
+    .foot .brand { font-size: 1.15rem; }
+    .foot address { font-style: normal; color: var(--muted); font-size: 0.94rem; line-height: 1.9; margin-top: 12px; }
+    .foot-links { display: flex; flex-wrap: wrap; gap: 18px; }
+    .foot-links a { color: var(--muted); font-size: 0.94rem; font-weight: 600; }
+    .foot-links a:hover { color: var(--sakura-deep); }
+    .copyright { text-align: center; color: var(--muted); font-size: 0.85rem; margin-top: 34px; }
   </style>
 </head>
 <body>
+  <!-- Reusable sakura SVG symbol -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="sakura" viewBox="0 0 100 100">
+      <g>
+        <path fill="currentColor" d="M50 50c0-14 4-30 0-42-4 12 0 28 0 42z" transform="rotate(0 50 50)"/>
+        <path fill="currentColor" d="M50 50c0-14 4-30 0-42-4 12 0 28 0 42z" transform="rotate(72 50 50)"/>
+        <path fill="currentColor" d="M50 50c0-14 4-30 0-42-4 12 0 28 0 42z" transform="rotate(144 50 50)"/>
+        <path fill="currentColor" d="M50 50c0-14 4-30 0-42-4 12 0 28 0 42z" transform="rotate(216 50 50)"/>
+        <path fill="currentColor" d="M50 50c0-14 4-30 0-42-4 12 0 28 0 42z" transform="rotate(288 50 50)"/>
+        <circle cx="50" cy="50" r="6" fill="#fff" opacity="0.55"/>
+      </g>
+    </symbol>
+  </svg>
+
   <header>
     <div class="container nav">
-      <div class="brand">Ten<span>musubi</span></div>
+      <a href="#top" class="brand">
+        <svg class="sakura-mark" width="30" height="30" style="color:var(--sakura)"><use href="#sakura"/></svg>
+        <span>おんケアマネ相談事業所<small>株式会社おん</small></span>
+      </a>
       <nav class="nav-links">
-        <a href="#features">特徴</a>
-        <a href="#about">私たちについて</a>
         <a href="#services">サービス</a>
-        <a href="#contact">お問い合わせ</a>
+        <a href="#greeting">ごあいさつ</a>
+        <a href="#flow">ご相談の流れ</a>
+        <a href="#company">事業所概要</a>
       </nav>
-      <a href="#contact" class="btn btn-primary">お問い合わせ</a>
+      <div class="tel-cta">
+        <a href="tel:052-887-2037" class="btn btn-primary">☎ 052-887-2037</a>
+      </div>
     </div>
   </header>
 
-  <main>
+  <main id="top">
     <!-- Hero -->
     <section class="hero">
-      <div class="container">
-        <span class="eyebrow">WELCOME</span>
-        <h1>ようこそ、私たちの<br>ホームページへ</h1>
-        <p>ここにサービスや想いを紹介する一文を入れます。訪れた方に、あなたの価値がひと目で伝わるページを目指しましょう。</p>
+      <svg class="petal p1" style="color:var(--sakura-soft)"><use href="#sakura"/></svg>
+      <svg class="petal p2" style="color:var(--sakura-soft)"><use href="#sakura"/></svg>
+      <svg class="petal p3" style="color:var(--sakura-soft)"><use href="#sakura"/></svg>
+      <div class="container hero-inner">
+        <span class="eyebrow">愛知県名古屋市北区・居宅介護支援事業所</span>
+        <h1>介護の「困った」を、<br><span class="accent">やさしく</span>おそばで支えます。</h1>
+        <p class="lead">おんケアマネ相談事業所は、経験豊富なケアマネジャー（介護支援専門員）が、ご本人とご家族に寄り添い、一人ひとりに合った介護のプランをご提案します。まずはお気軽にご相談ください。</p>
         <div class="hero-actions">
-          <a href="#contact" class="btn btn-primary">はじめる</a>
-          <a href="#features" class="btn btn-ghost">詳しく見る</a>
+          <a href="#contact" class="btn btn-primary">相談してみる</a>
+          <a href="#services" class="btn btn-ghost">サービスを見る</a>
         </div>
       </div>
     </section>
 
-    <!-- Features -->
-    <section id="features">
+    <!-- Concerns -->
+    <section class="concern">
       <div class="container">
         <div class="section-head">
-          <h2>選ばれる3つの理由</h2>
-          <p>私たちが大切にしていることをご紹介します。</p>
+          <span class="kicker">SUCH WORRIES</span>
+          <h2>こんなお悩みはありませんか？</h2>
+          <p>介護に関する不安や疑問は、どんな小さなことでも構いません。</p>
         </div>
-        <div class="grid">
-          <div class="card">
-            <div class="icon">⚡</div>
-            <h3>スピード</h3>
-            <p>お問い合わせから対応まで、スピーディーかつ丁寧に。お待たせしません。</p>
-          </div>
-          <div class="card">
-            <div class="icon">🤝</div>
-            <h3>信頼</h3>
-            <p>一つひとつの仕事に真摯に向き合い、長くお付き合いできる関係を築きます。</p>
-          </div>
-          <div class="card">
-            <div class="icon">✨</div>
-            <h3>品質</h3>
-            <p>細部までこだわり抜き、期待を超える成果をお届けします。</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- About -->
-    <section id="about" class="about">
-      <div class="container about-inner">
-        <div>
-          <h2>私たちについて</h2>
-          <p>ここに会社やサービスの紹介文を入れます。これまでの歩み、大切にしている価値観、これから目指す未来を、あなたの言葉で綴りましょう。</p>
-          <p>読み手が「この人たちにお願いしたい」と感じられるストーリーを意識するのがおすすめです。</p>
-          <div class="stats">
-            <div class="stat"><div class="num">10<small>年</small></div><div class="label">の実績</div></div>
-            <div class="stat"><div class="num">500<small>+</small></div><div class="label">のお客様</div></div>
-            <div class="stat"><div class="num">98<small>%</small></div><div class="label">の満足度</div></div>
-          </div>
-        </div>
-        <div>
-          <div class="card" style="padding:40px 32px;">
-            <div class="icon">💬</div>
-            <h3>ミッション</h3>
-            <p>私たちは「むすぶ」ことを通じて、人と人、想いと想いをつなぎ、より豊かな毎日を届けます。</p>
-          </div>
+        <div class="concern-grid">
+          <div class="concern-item"><span class="q">Q.</span>親の介護が必要になったが、何から始めればいいか分からない</div>
+          <div class="concern-item"><span class="q">Q.</span>介護保険のしくみや手続きが難しくて困っている</div>
+          <div class="concern-item"><span class="q">Q.</span>どんな介護サービスを利用できるのか相談したい</div>
+          <div class="concern-item"><span class="q">Q.</span>今のケアプランを見直したい・別のケアマネに相談したい</div>
         </div>
       </div>
     </section>
@@ -216,36 +279,130 @@
     <section id="services">
       <div class="container">
         <div class="section-head">
-          <h2>サービス</h2>
-          <p>ご提供している主なサービスです。</p>
+          <span class="kicker">SERVICE</span>
+          <h2>サービス案内</h2>
+          <p>介護保険の範囲内で、ご利用者さまの費用負担なくご利用いただけます。</p>
         </div>
         <div class="grid">
           <div class="card">
-            <div class="icon">🧭</div>
-            <h3>コンサルティング</h3>
-            <p>課題の整理から解決策のご提案まで、伴走型でサポートします。</p>
+            <div class="icon"><svg width="30" height="30" style="color:var(--sakura)"><use href="#sakura"/></svg></div>
+            <h3>ケアプランの作成</h3>
+            <p>ご本人の心身の状態やご希望をていねいにお伺いし、最適な介護サービスを組み合わせたケアプラン（介護サービス計画）を作成します。</p>
           </div>
           <div class="card">
-            <div class="icon">🎨</div>
-            <h3>デザイン・制作</h3>
-            <p>ブランドの魅力を引き出す、心に残るデザインをお届けします。</p>
+            <div class="icon"><svg width="30" height="30" style="color:var(--sakura)"><use href="#sakura"/></svg></div>
+            <h3>介護に関するご相談</h3>
+            <p>「どうしたらいい？」に主任介護支援専門員がお答えします。ご本人・ご家族の思いを大切に、一緒に考えていきます。</p>
           </div>
           <div class="card">
-            <div class="icon">🛠️</div>
-            <h3>サポート・運用</h3>
-            <p>導入後も安心。継続的な運用と改善をお手伝いします。</p>
+            <div class="icon"><svg width="30" height="30" style="color:var(--sakura)"><use href="#sakura"/></svg></div>
+            <h3>要介護認定の申請代行</h3>
+            <p>要介護・要支援認定の申請や更新の手続きを代行します。はじめての方も安心してお任せください。</p>
+          </div>
+          <div class="card">
+            <div class="icon"><svg width="30" height="30" style="color:var(--sakura)"><use href="#sakura"/></svg></div>
+            <h3>サービス事業者との調整</h3>
+            <p>デイサービス・訪問介護・福祉用具など、各事業者との連絡・調整を行い、安心して暮らせる環境を整えます。</p>
+          </div>
+          <div class="card">
+            <div class="icon"><svg width="30" height="30" style="color:var(--sakura)"><use href="#sakura"/></svg></div>
+            <h3>継続的な見守り・モニタリング</h3>
+            <p>定期的にご自宅を訪問し、暮らしの変化に合わせてケアプランを見直します。長く安心が続くよう寄り添います。</p>
+          </div>
+          <div class="card">
+            <div class="icon"><svg width="30" height="30" style="color:var(--sakura)"><use href="#sakura"/></svg></div>
+            <h3>医療・地域との連携</h3>
+            <p>かかりつけ医や地域包括支援センターなど、関係機関と連携し、多方面からくらしを支えます。</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- CTA / Contact -->
-    <section id="contact" class="cta">
+    <!-- Greeting -->
+    <section id="greeting" class="greeting">
+      <div class="container greeting-inner">
+        <div class="greeting-card">
+          <svg width="54" height="54" style="color:var(--sakura)"><use href="#sakura"/></svg>
+          <div class="role" style="margin-top:12px;">代表取締役 / 主任介護支援専門員</div>
+          <div class="name">加藤　早苗</div>
+          <div class="name-en">Sanae&nbsp;&nbsp;Kato</div>
+        </div>
+        <div>
+          <span class="kicker" style="color:var(--sakura); font-weight:700; letter-spacing:0.12em; font-size:0.85rem;">GREETING</span>
+          <h2>ごあいさつ</h2>
+          <p>数あるページの中から、おんケアマネ相談事業所をご覧いただき、ありがとうございます。</p>
+          <p>介護は、ある日突然、ご本人やご家族の暮らしに訪れます。「何をどうすればいいのか分からない」——そんな不安な気持ちに、私たちはいつでも寄り添いたいと考えています。</p>
+          <p>ご利用者さま一人ひとりが、住み慣れたご自宅・地域で、その人らしく穏やかに暮らし続けられるように。ご本人とご家族の想いをていねいにお伺いし、心のこもったお手伝いをお約束します。どうぞお気軽にお声がけください。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Flow -->
+    <section id="flow">
       <div class="container">
-        <div class="cta-box">
-          <h2>お気軽にご相談ください</h2>
-          <p>ご質問・ご依頼など、まずはお問い合わせフォームからどうぞ。</p>
-          <a href="mailto:info@10musubidot.com" class="btn btn-primary">メールで問い合わせる</a>
+        <div class="section-head">
+          <span class="kicker">FLOW</span>
+          <h2>ご相談の流れ</h2>
+          <p>ご相談からサービス開始まで、しっかりサポートいたします。</p>
+        </div>
+        <div class="flow">
+          <div class="step">
+            <div class="no">1</div>
+            <h3>お問い合わせ</h3>
+            <p>お電話でお気軽にご連絡ください。ご相談は無料です。</p>
+          </div>
+          <div class="step">
+            <div class="no">2</div>
+            <h3>訪問・ヒアリング</h3>
+            <p>ご自宅へお伺いし、心身の状態やご希望をお聞きします。</p>
+          </div>
+          <div class="step">
+            <div class="no">3</div>
+            <h3>ケアプランのご提案</h3>
+            <p>お一人おひとりに合わせた介護プランをご提案します。</p>
+          </div>
+          <div class="step">
+            <div class="no">4</div>
+            <h3>サービス開始・見守り</h3>
+            <p>サービス開始後も定期的に訪問し、継続して支えます。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Company -->
+    <section id="company" class="concern">
+      <div class="container">
+        <div class="section-head">
+          <span class="kicker">COMPANY</span>
+          <h2>事業所概要</h2>
+        </div>
+        <table class="company-table">
+          <tbody>
+            <tr><th>事業所名</th><td>おんケアマネ相談事業所</td></tr>
+            <tr><th>運営会社</th><td>株式会社おん（ON Co., Ltd.）</td></tr>
+            <tr><th>代表者</th><td>代表取締役 / 主任介護支援専門員　加藤　早苗</td></tr>
+            <tr><th>所在地</th><td>〒462-0014<br>愛知県名古屋市北区楠味鋺一丁目737番地の3</td></tr>
+            <tr><th>電話番号</th><td><a href="tel:052-887-2037">052-887-2037</a></td></tr>
+            <tr><th>FAX</th><td>050-3537-4039</td></tr>
+            <tr><th>介護保険事業所番号</th><td>2370305431</td></tr>
+            <tr><th>事業内容</th><td>居宅介護支援事業（ケアマネジメント・介護相談）</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="contact">
+      <div class="container">
+        <div class="contact-box">
+          <h2>まずはお気軽にご相談ください</h2>
+          <p>介護のこと、どんな小さなことでも構いません。<br>専門の相談員がていねいにお話をお伺いします。</p>
+          <div class="contact-tel">
+            <span class="hours">お電話でのお問い合わせ</span>
+            <span class="num"><a href="tel:052-887-2037">☎ 052-887-2037</a></span>
+          </div>
+          <div class="fax">FAX：050-3537-4039</div>
         </div>
       </div>
     </section>
@@ -253,14 +410,27 @@
 
   <footer>
     <div class="container foot">
-      <div class="muted">© 2026 Tenmusubi. All rights reserved.</div>
+      <div>
+        <div class="brand">
+          <svg class="sakura-mark" width="26" height="26" style="color:var(--sakura)"><use href="#sakura"/></svg>
+          <span>おんケアマネ相談事業所</span>
+        </div>
+        <address>
+          株式会社おん<br>
+          〒462-0014　愛知県名古屋市北区楠味鋺一丁目737番地の3<br>
+          TEL：052-887-2037　／　FAX：050-3537-4039<br>
+          介護保険事業所番号：2370305431
+        </address>
+      </div>
       <nav class="foot-links">
-        <a href="#features">特徴</a>
-        <a href="#about">私たちについて</a>
         <a href="#services">サービス</a>
+        <a href="#greeting">ごあいさつ</a>
+        <a href="#flow">ご相談の流れ</a>
+        <a href="#company">事業所概要</a>
         <a href="#contact">お問い合わせ</a>
       </nav>
     </div>
+    <div class="container copyright">© 2026 株式会社おん（おんケアマネ相談事業所）</div>
   </footer>
 </body>
 </html>
