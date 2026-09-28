@@ -1,11 +1,543 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>greeting</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>ケアマネ相談事業所｜株式会社おん</title>
+<meta name="description" content="株式会社おんが運営する居宅介護支援事業所です。介護のご相談、ケアプランの作成を承ります。ご相談・プラン作成の自己負担はありません。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;600;900&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ai:#E88BA0;        /* 曙色（スイッチON の光） */
+  --ai-deep:#B03A57;   /* 深い紅（文字に使える濃さ） */
+  --ink:#3B2A33;       /* 墨紅 */
+  --ink-soft:#6E5B64;
+  --paper:#FDF7F6;     /* 桜霞 */
+  --mist:#EFE0E0;
+  --white:#fff;
+  --serif:'Zen Old Mincho',serif;
+  --sans:'Zen Kaku Gothic New',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans);
+  font-size:17px;
+  line-height:1.95;
+  color:var(--ink);
+  background:var(--paper);
+  -webkit-font-smoothing:antialiased;
+  padding-bottom:76px;
+}
+@media(min-width:768px){body{font-size:18px;padding-bottom:0}}
+a{color:inherit}
+.wrap{width:min(100% - 40px,1040px);margin-inline:auto}
+.narrow{width:min(100% - 40px,720px);margin-inline:auto}
+
+/* ---------- 要記入マーカー ---------- */
+.tbd{
+  display:inline-block;
+  background:rgba(232,139,160,.14);
+  border:1px dashed var(--ai-deep);
+  border-radius:4px;
+  padding:1px 10px;
+  color:var(--ai-deep);
+  font-size:.85em;
+  font-weight:500;
+  white-space:nowrap;
+}
+
+/* ---------- ヘッダー ---------- */
+header{
+  position:sticky;top:0;z-index:50;
+  background:rgba(253,247,246,.94);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--mist);
+}
+.hbar{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+.logo{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.08em;line-height:1.3}
+.logo small{display:block;font-family:var(--sans);font-weight:500;font-size:11px;letter-spacing:.14em;color:var(--ink-soft)}
+.hcontact{display:none}
+@media(min-width:768px){
+  .hcontact{display:flex;align-items:baseline;gap:22px}
+  .htel{font-family:var(--serif);font-size:26px;font-weight:600;letter-spacing:.02em;text-decoration:none}
+  .hfax{font-size:14px;color:var(--ink-soft)}
+  .hhours{font-size:13px;color:var(--ink-soft)}
+}
+
+/* ---------- ヒーロー ---------- */
+.hero{
+  position:relative;overflow:hidden;padding:74px 0 68px;
+  background:linear-gradient(180deg,#FAE6E7 0%,#FDF3F2 58%,var(--paper) 100%);
+}
+.glow{
+  position:absolute;top:-160px;left:50%;transform:translateX(-50%);
+  width:820px;height:520px;pointer-events:none;z-index:0;
+  background:radial-gradient(ellipse at center,rgba(232,139,160,.55),rgba(232,139,160,0) 68%);
+  opacity:0;transition:opacity 1.3s ease-out;
+}
+.hero.lit .glow{opacity:1}
+/* 点灯フラッシュ（ONの瞬間、スイッチの位置から画面が明るく） */
+.flash{
+  position:absolute;inset:0;pointer-events:none;z-index:0;opacity:0;
+  background:radial-gradient(circle at 14% 46%,rgba(255,238,242,.95),rgba(255,238,242,0) 52%);
+}
+.hero.flashing .flash{animation:flash 1.05s ease-out forwards}
+@keyframes flash{0%{opacity:0}16%{opacity:.9}100%{opacity:0}}
+.hero-inner{position:relative;z-index:1}
+.eyebrow{
+  font-size:13px;letter-spacing:.22em;color:var(--ai-deep);font-weight:700;
+  margin-bottom:26px;
+}
+.hero h1{
+  font-family:var(--serif);font-weight:900;
+  font-size:clamp(34px,8.4vw,62px);
+  line-height:1.42;letter-spacing:.02em;margin-bottom:26px;
+}
+.hero h1 .on{position:relative;color:var(--ink);white-space:nowrap;transition:color .5s ease .15s}
+.hero.lit h1 .on{color:var(--ai-deep)}
+.hero h1 .on::after{
+  content:"";position:absolute;left:0;bottom:.06em;height:.5em;width:100%;
+  background:rgba(232,139,160,.26);z-index:-1;
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .6s cubic-bezier(.2,.7,.3,1) .15s;
+}
+.hero.lit h1 .on::after{transform:scaleX(1)}
+.hero p.lead{font-size:1.02em;color:var(--ink-soft);margin-bottom:34px;max-width:34em}
+
+/* スイッチ */
+.switch{
+  display:inline-flex;align-items:center;gap:16px;margin-bottom:38px;
+  background:none;border:0;padding:0;font:inherit;cursor:pointer;
+  position:relative;text-align:left;-webkit-tap-highlight-color:transparent;
+}
+.track{
+  width:78px;height:40px;border-radius:999px;background:#CFC2C6;
+  position:relative;flex:none;
+  transition:background .5s ease, box-shadow .5s ease;
+}
+.hero.lit .track{
+  background:var(--ai);
+  box-shadow:0 0 0 1px rgba(176,58,87,.14),0 8px 22px rgba(232,139,160,.55);
+}
+.knob{
+  position:absolute;top:4px;left:4px;z-index:3;
+  width:32px;height:32px;border-radius:50%;
+  background:var(--white);box-shadow:0 2px 6px rgba(59,42,51,.30);
+  transition:left .55s cubic-bezier(.45,-0.4,.3,1.5);
+}
+.hero.lit .knob{left:42px}
+/* 放射する光の筋（点灯時に広がる） */
+.spark{
+  position:absolute;left:50%;top:50%;z-index:1;width:150px;height:150px;
+  transform:translate(-50%,-50%) scale(.3);opacity:0;pointer-events:none;
+  background:repeating-conic-gradient(from 0deg,rgba(232,139,160,.6) 0deg 5deg,transparent 5deg 17deg);
+  border-radius:50%;
+  -webkit-mask:radial-gradient(circle,transparent 26%,#000 40%,transparent 66%);
+          mask:radial-gradient(circle,transparent 26%,#000 40%,transparent 66%);
+}
+.hero.flashing .spark{animation:spark .9s ease-out forwards}
+@keyframes spark{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(.3) rotate(0deg)}
+  22%{opacity:.9}
+  100%{opacity:0;transform:translate(-50%,-50%) scale(1.7) rotate(42deg)}
+}
+/* 外へ抜ける波紋のリング */
+.ripple{
+  position:absolute;inset:-8px;z-index:2;border-radius:999px;
+  border:2px solid var(--ai);opacity:0;pointer-events:none;
+}
+.hero.flashing .ripple{animation:ripple 1s ease-out forwards}
+@keyframes ripple{
+  0%{opacity:.85;transform:scale(.72)}
+  100%{opacity:0;transform:scale(2)}
+}
+.switch-txt{display:flex;flex-direction:column;gap:3px}
+.switch-label{font-size:14px;letter-spacing:.16em;color:var(--ink-soft);font-weight:500}
+.switch-label .s-off,.switch-label .s-on{transition:color .4s ease,font-weight .4s ease}
+.hero:not(.lit) .switch-label .s-off{color:var(--ink);font-weight:700}
+.hero.lit .switch-label .s-on{color:var(--ai-deep);font-weight:700}
+.switch-hint{font-size:11px;letter-spacing:.1em;color:var(--ink-soft);opacity:.75}
+
+.badges{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:34px}
+.badge{
+  background:var(--white);border:1px solid var(--mist);border-radius:999px;
+  padding:8px 18px;font-size:14px;font-weight:500;
+}
+.badge.hot{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+.cta{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--ai);color:var(--ink);text-decoration:none;
+  padding:17px 30px;border-radius:6px;font-weight:700;font-size:17px;
+  box-shadow:0 3px 0 var(--ai-deep);transition:transform .12s,box-shadow .12s;
+}
+.btn:active{transform:translateY(3px);box-shadow:0 0 0 var(--ai-deep)}
+.btn.ghost{background:transparent;border:1.5px solid var(--ink);box-shadow:none;color:var(--ink)}
+
+/* ---------- セクション共通 ---------- */
+section{padding:72px 0}
+.sec-label{
+  font-size:12px;letter-spacing:.24em;color:var(--ai-deep);font-weight:700;margin-bottom:14px;
+}
+h2{
+  font-family:var(--serif);font-weight:900;
+  font-size:clamp(25px,5.4vw,38px);line-height:1.5;letter-spacing:.02em;
+  margin-bottom:30px;
+}
+h3{font-family:var(--serif);font-weight:600;font-size:20px;line-height:1.6;margin-bottom:12px}
+
+/* こんなとき */
+.cases{display:grid;gap:14px}
+@media(min-width:700px){.cases{grid-template-columns:1fr 1fr}}
+.case{
+  background:var(--white);border:1px solid var(--mist);border-radius:8px;
+  padding:22px 24px;font-size:16px;line-height:1.8;
+  display:flex;gap:14px;align-items:flex-start;
+}
+.case i{
+  flex:none;width:8px;height:8px;border-radius:50%;background:var(--ai);margin-top:.72em;
+}
+
+/* おんの由来 */
+.origin{background:var(--white);border-top:1px solid var(--mist);border-bottom:1px solid var(--mist)}
+.origins{display:grid;gap:40px;margin-top:12px}
+@media(min-width:860px){.origins{grid-template-columns:repeat(3,1fr);gap:44px}}
+.origin-card{border-top:2px solid var(--ink);padding-top:24px}
+.origin-mark{
+  font-family:var(--serif);font-weight:900;
+  font-size:52px;line-height:1;color:var(--ai-deep);margin-bottom:6px;letter-spacing:.02em;
+}
+.origin-kind{font-size:12px;letter-spacing:.2em;color:var(--ink-soft);margin-bottom:18px}
+.origin-card p{font-size:16px;line-height:1.95}
+.origin-card ul{list-style:none;margin:14px 0;font-size:15px;color:var(--ink-soft)}
+.origin-card ul li{padding-left:18px;position:relative;line-height:1.8}
+.origin-card ul li::before{content:"—";position:absolute;left:0;color:var(--ai)}
+
+/* 理念 */
+.creed{text-align:center}
+.creed .big{
+  font-family:var(--serif);font-weight:600;
+  font-size:clamp(21px,4.6vw,31px);line-height:2.1;letter-spacing:.03em;
+}
+.creed .big em{font-style:normal;color:var(--ai-deep);font-weight:900}
+.words{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:34px 0}
+.word{
+  font-family:var(--serif);font-size:17px;padding:6px 20px;
+  border:1px solid var(--mist);border-radius:999px;background:var(--white);
+}
+
+/* 流れ */
+.flow{display:grid;gap:0;counter-reset:step}
+.step{
+  display:grid;grid-template-columns:56px 1fr;gap:20px;
+  padding:26px 0;border-bottom:1px solid var(--mist);
+}
+.step:first-child{border-top:1px solid var(--mist)}
+.step-n{
+  font-family:var(--serif);font-weight:900;font-size:30px;color:var(--ai);line-height:1.2;
+}
+.step p{font-size:16px;color:var(--ink-soft);margin-top:4px}
+
+/* 概要 */
+.info{background:var(--white);border:1px solid var(--mist);border-radius:10px;overflow:hidden}
+.row{display:grid;grid-template-columns:1fr;border-bottom:1px solid var(--mist)}
+.row:last-child{border-bottom:0}
+@media(min-width:640px){.row{grid-template-columns:190px 1fr}}
+.row dt{
+  background:#FAEFEF;padding:16px 22px;font-weight:700;font-size:15px;letter-spacing:.04em;
+}
+.row dd{padding:16px 22px;font-size:16px}
+
+/* 採用 */
+.recruit{background:var(--ink);color:var(--paper)}
+.recruit h2{color:var(--paper)}
+.recruit .sec-label{color:var(--ai)}
+.recruit p{color:rgba(253,247,246,.88)}
+.recruit .quote{
+  font-family:var(--serif);font-size:clamp(20px,4.4vw,29px);line-height:1.95;
+  margin:30px 0;color:var(--paper);
+}
+.recruit .quote b{color:var(--ai);font-weight:900}
+
+/* お問い合わせ */
+.contact-box{
+  background:var(--white);border:2px solid var(--ink);border-radius:12px;
+  padding:38px 28px;text-align:center;
+}
+.contact-tel{
+  font-family:var(--serif);font-weight:600;
+  font-size:clamp(34px,9vw,52px);line-height:1.2;letter-spacing:.01em;
+  text-decoration:none;display:inline-block;margin:10px 0 6px;
+}
+.contact-sub{font-size:15px;color:var(--ink-soft)}
+
+footer{background:var(--paper);border-top:1px solid var(--mist);padding:38px 0 46px;font-size:14px;color:var(--ink-soft)}
+.foot-logo{font-family:var(--serif);font-weight:900;font-size:19px;color:var(--ink);letter-spacing:.08em;margin-bottom:10px}
+
+/* モバイル固定バー */
+.mobilebar{
+  position:fixed;left:0;right:0;bottom:0;z-index:60;display:flex;
+  border-top:1px solid var(--mist);background:var(--white);
+  padding-bottom:env(safe-area-inset-bottom, 0px);
+}
+.mobilebar a{
+  flex:1;text-align:center;padding:17px 6px;text-decoration:none;font-weight:700;font-size:16px;
+}
+.mobilebar a.tel{background:var(--ai);color:var(--ink)}
+.mobilebar a.fax{color:var(--ink)}
+@media(min-width:768px){.mobilebar{display:none}}
+
+:focus-visible{outline:3px solid var(--ai-deep);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  /* 動きを止め、点灯後の状態で静止させる */
+  .glow{opacity:1}
+  .knob{left:42px}
+  .track{background:var(--ai)}
+  .hero h1 .on{color:var(--ai-deep)}
+  .hero h1 .on::after{transform:scaleX(1)}
+  .switch-label .s-on{color:var(--ai-deep);font-weight:700}
+  .switch-hint{display:none}
+  .spark,.ripple{display:none}
+}
+</style>
 </head>
 <body>
-  <h1>こんにちは！</h1>
+
+<header>
+  <div class="wrap hbar">
+    <div class="logo">ケアマネ相談事業所<small>株式会社おん</small></div>
+    <div class="hcontact">
+      <div>
+        <a class="htel" href="#" onclick="return false" style="cursor:default"><span class="tbd">電話番号</span></a>
+        <div class="hhours"><span class="tbd">営業時間</span></div>
+      </div>
+      <div class="hfax">FAX <span class="tbd">FAX番号</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="flash"></div>
+  <div class="glow"></div>
+  <div class="wrap hero-inner">
+    <div class="eyebrow">居宅介護支援事業所</div>
+
+    <button class="switch" type="button" role="switch" aria-checked="false" aria-label="心のスイッチ">
+      <span class="track">
+        <span class="knob"></span>
+        <span class="spark"></span>
+        <span class="ripple"></span>
+      </span>
+      <span class="switch-txt">
+        <span class="switch-label"><span class="s-off">OFF</span> ／ <span class="s-on">ON</span></span>
+        <span class="switch-hint">タップで切り替え</span>
+      </span>
+    </button>
+
+    <h1>心のスイッチを、<br><span class="on">ON</span> に。</h1>
+    <p class="lead">介護のことで、どこに相談していいか分からない。そんなときに最初に思い出していただける事業所でありたいと思っています。ご本人にも、ご家族にも、無理のない暮らしのかたちを一緒に考えます。</p>
+
+    <div class="badges">
+      <span class="badge hot">新規のご相談 受付中</span>
+      <span class="badge">ご相談・ケアプラン作成は自己負担なし</span>
+      <span class="badge">対応エリア <span class="tbd">市区町村</span></span>
+    </div>
+
+    <div class="cta">
+      <a class="btn" href="#" onclick="return false" style="cursor:default">電話で相談する</a>
+      <a class="btn ghost" href="#flow">相談の流れを見る</a>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="sec-label">こんなときに</div>
+    <h2>こんなご相談を<br>お受けしています</h2>
+    <div class="cases">
+      <div class="case"><i></i><div>親の物忘れが増えてきた。何から始めればいいのか分からない。</div></div>
+      <div class="case"><i></i><div>退院の日が決まったが、家に帰ってからの生活が不安。</div></div>
+      <div class="case"><i></i><div>介護保険を使いたいが、申請の仕方が分からない。</div></div>
+      <div class="case"><i></i><div>離れて暮らす親のことが心配で、様子を見てくれる人がほしい。</div></div>
+      <div class="case"><i></i><div>今のケアプランが合っていない気がする。担当を変えたい。</div></div>
+      <div class="case"><i></i><div>介護をしている自分のほうが、限界に近づいている。</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="origin">
+  <div class="wrap">
+    <div class="sec-label">社名の由来</div>
+    <h2>「おん」には、<br>三つの意味があります。</h2>
+    <div class="origins">
+
+      <div class="origin-card">
+        <div class="origin-mark">ON</div>
+        <div class="origin-kind">スイッチの、おん</div>
+        <p>自信をなくしてスイッチが切れてしまう。疲れて力が出なくなる。本当はできるのに、環境のせいで止まってしまう。そんな瞬間は、誰にでもあります。</p>
+        <p style="margin-top:14px">その人のスイッチを、そっと ON にできる存在でありたい。</p>
+      </div>
+
+      <div class="origin-card">
+        <div class="origin-mark">温</div>
+        <div class="origin-kind">温かいの、おん</div>
+        <p>人と関わる場は、どんな分野であっても、結局は人の気持ちが真ん中にあります。効率や正しさだけではなく、ちゃんと温度のある関わりを大事にしたい。</p>
+        <p style="margin-top:14px">冷たく管理する組織ではなく、人が安心して戻ってこられる場所でありたいと思っています。</p>
+      </div>
+
+      <div class="origin-card">
+        <div class="origin-mark">恩</div>
+        <div class="origin-kind">恩、恩返しの、おん</div>
+        <p>ひとりだけで生きてきた人は、誰ひとりいません。家族、仲間、利用者さん、地域。見えないところで、たくさんの「おん」を受け取って生きています。</p>
+        <p style="margin-top:14px">受け取った「おん」を、次につないでいく場所でありたい。</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="narrow creed">
+    <div class="sec-label">理念</div>
+    <p class="big">いろんな人の、<br>いろんな “おん” が<br><em>つながること</em>。</p>
+    <div class="words">
+      <span class="word">得意なこと</span>
+      <span class="word">苦手なこと</span>
+      <span class="word">経験</span>
+      <span class="word">失敗</span>
+      <span class="word">優しさ</span>
+    </div>
+    <p style="color:var(--ink-soft)">それぞれ違っていい。でも、それがつながったときに、ひとりでは出せない力が生まれる。私たちはそう信じています。</p>
+  </div>
+</section>
+
+<section id="flow" style="background:var(--white);border-top:1px solid var(--mist);border-bottom:1px solid var(--mist)">
+  <div class="narrow">
+    <div class="sec-label">ご相談の流れ</div>
+    <h2>お電話一本から<br>始められます</h2>
+    <div class="flow">
+      <div class="step">
+        <div class="step-n">1</div>
+        <div><h3>お電話・FAXでご連絡</h3><p>ご本人、ご家族、病院や地域包括支援センターからのご連絡も承ります。まだ何も決まっていない段階で構いません。</p></div>
+      </div>
+      <div class="step">
+        <div class="step-n">2</div>
+        <div><h3>ご自宅へ伺ってお話を聞きます</h3><p>暮らしの様子、困っていること、これからどうしたいか。ご都合のよい場所とお時間に合わせます。入院中の病室へ伺うことも可能です。</p></div>
+      </div>
+      <div class="step">
+        <div class="step-n">3</div>
+        <div><h3>介護保険の申請をお手伝い</h3><p>まだ認定を受けていない方は、申請の代行も行います。認定が出るまでの間のご相談も継続して承ります。</p></div>
+      </div>
+      <div class="step">
+        <div class="step-n">4</div>
+        <div><h3>ケアプランを一緒に作ります</h3><p>使えるサービスを並べるのではなく、その方の暮らしに合うかたちを一緒に考えます。</p></div>
+      </div>
+      <div class="step">
+        <div class="step-n">5</div>
+        <div><h3>サービス開始、そして継続して伴走</h3><p>開始後も定期的に訪問し、状況の変化に合わせて見直します。何かあればいつでもご連絡ください。</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-label">事業所概要</div>
+    <h2>事業所のご案内</h2>
+    <dl class="info">
+      <div class="row"><dt>事業所名</dt><dd>ケアマネ相談事業所</dd></div>
+      <div class="row"><dt>運営法人</dt><dd>株式会社おん</dd></div>
+      <div class="row"><dt>代表取締役</dt><dd>加藤 さなえ</dd></div>
+      <div class="row"><dt>管理者</dt><dd><span class="tbd">管理者名</span></dd></div>
+      <div class="row"><dt>事業所番号</dt><dd>2370305431</dd></div>
+      <div class="row"><dt>開設</dt><dd>2026年8月</dd></div>
+      <div class="row"><dt>所在地</dt><dd><span class="tbd">住所（郵便番号から）</span></dd></div>
+      <div class="row"><dt>電話・FAX</dt><dd>TEL <span class="tbd">電話番号</span>　／　FAX <span class="tbd">FAX番号</span></dd></div>
+      <div class="row"><dt>営業時間</dt><dd><span class="tbd">例：平日 9:00〜18:00</span></dd></div>
+      <div class="row"><dt>休業日</dt><dd><span class="tbd">例：土日祝・年末年始</span></dd></div>
+      <div class="row"><dt>対応エリア</dt><dd><span class="tbd">市区町村名を列挙</span></dd></div>
+      <div class="row"><dt>職員体制</dt><dd>介護支援専門員 <span class="tbd">名</span>（うち主任介護支援専門員 <span class="tbd">名</span>）</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section class="recruit">
+  <div class="narrow">
+    <div class="sec-label">RECRUIT</div>
+    <h2>一緒に働く人へ</h2>
+    <p>この会社は、「我慢して働く場所」にはしたくありません。誰かが無理をして、自分のスイッチを切りながら働く会社ではなく——</p>
+    <p class="quote">イキイキと、自分のスイッチが<b>ON</b>になる会社。<br>完璧じゃなくていい。<br>失敗してもいい。</p>
+    <p>経験の長さより、目の前の人にちゃんと関わりたいと思えるかどうかを大事にしています。ご興味のある方は、まずはお気軽にご連絡ください。</p>
+    <div style="margin-top:26px"><a class="btn" href="#" onclick="return false" style="cursor:default">採用について問い合わせる</a></div>
+  </div>
+</section>
+
+<section>
+  <div class="narrow">
+    <div class="sec-label">お問い合わせ</div>
+    <h2>まずは、お電話ください</h2>
+    <div class="contact-box">
+      <div style="font-size:15px;color:var(--ink-soft)">お気軽にご相談ください</div>
+      <a class="contact-tel" href="#" onclick="return false" style="cursor:default"><span class="tbd">電話番号</span></a>
+      <div class="contact-sub"><span class="tbd">営業時間</span>　／　FAX <span class="tbd">FAX番号</span>（24時間受付）</div>
+      <div style="margin-top:22px;font-size:15px;color:var(--ink-soft)">ご相談は無料です。介護保険の認定前でも構いません。</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-logo">株式会社おん</div>
+    <div>ケアマネ相談事業所（居宅介護支援事業所）　事業所番号 2370305431</div>
+    <div style="margin-top:8px"><span class="tbd">住所</span>　TEL <span class="tbd">電話番号</span></div>
+    <div style="margin-top:18px;font-size:13px">© 2026 株式会社おん</div>
+  </div>
+</footer>
+
+<div class="mobilebar">
+  <a class="tel" href="#" onclick="return false" style="cursor:default">電話する</a>
+  <a class="fax" href="#flow">相談の流れ</a>
+</div>
+
+<script>
+(function(){
+  var hero=document.querySelector('.hero');
+  var sw=document.querySelector('.switch');
+  if(!hero||!sw)return;
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function burst(){
+    hero.classList.remove('flashing');
+    void hero.offsetWidth;            /* リフローで演出を再スタート */
+    hero.classList.add('flashing');
+  }
+  function setOn(on,withBurst){
+    hero.classList.toggle('lit',on);
+    sw.setAttribute('aria-checked',on?'true':'false');
+    if(on&&withBurst&&!reduce)burst();
+  }
+
+  if(reduce){
+    setOn(true,false);              /* 動きなしで点灯状態に */
+  }else{
+    setOn(false,false);             /* OFFから始めて… */
+    setTimeout(function(){setOn(true,true);},1150); /* 読み込み後にON */
+  }
+
+  sw.addEventListener('click',function(){
+    setOn(!hero.classList.contains('lit'),true);
+  });
+  hero.addEventListener('animationend',function(e){
+    if(e.animationName==='flash')hero.classList.remove('flashing');
+  });
+})();
+</script>
+
 </body>
 </html>
